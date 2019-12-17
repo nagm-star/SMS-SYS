@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use \App\User;
-use App\Profile;
 use Illuminate\Support\Facades\Hash;
 use League\Flysystem\Exception;
 use Session;
@@ -55,14 +54,10 @@ class UsersController extends Controller
           'name' => $request->name,
           'email' => $request->email,
           'admin' => $request->role,
-          'password' => Hash::make('password')
+          'password' => Hash::make('password'),
       ]);
 
-      $profile = Profile::create([
-          'user_id' => $user->id,
-          'avatar' => 'uploads/avatars/1.png'
-      ]);
-
+     
       Session::flash('success', 'You successfully added user');
 
       return redirect(route('users.index'));
@@ -112,7 +107,18 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
+        $user = User::findorFail($id);
 
+        //Delete Profile Image
+        $image_path = storage_path('app\public\img\Profile\\'.$user->avatar);
+            if (File::exists($image_path)) {
+                unlink($image_path);
+            }
+
+        //then Delete User
+        $user->delete();
+        Session::flash('success', 'You successfully Deleted user');
+        return redirect(route('users.index'));
 
     }
 
@@ -124,5 +130,76 @@ class UsersController extends Controller
     public function not_admin($id)
     {
 
+    }
+
+    //added by Debo
+
+    public function profile($id)
+    {
+        
+        $user  = User::findorFail($id);
+        //dd($user);
+        return view('admin.users.profile')->withUser($user);
+    }
+
+    public function updateprofile(Request $request, $id)
+    {
+        $user = User::findorFail($id);
+
+        $validator = Validator::make($request->all(),[
+                'name'=>'required|string|max:255',
+                'email' => [
+                    'required','string','email','max:255',
+                    Rule::unique('users')->ignore($user->id),
+                ],
+                'password' => 'required|string|min:8',
+                'password-confirm' => 'required|string|min:8|same:password',
+        ]);
+
+        if ($validator->fails()) {
+
+            return redirect()->back()->withErrors($validator)->withInput();
+         
+         }
+         
+        if ($request->hasFile('image'))
+        {
+            //get filename with extension
+            $filenameWithExt = $request->file('image')->getClientOriginalName();
+            //get just filename
+            $filename = pathinfo($filenameWithExt,PATHINFO_FILENAME);
+            //get just extension
+            $extension = $request->file('image')->getClientOriginalExtension();
+            //create filename to store
+            $fileNametoStore = $filename .'_'.time().'.'.$extension;
+            //upload image
+            $path = $request->file('image')->storeAs('/public/img/Profile/',$fileNametoStore);
+            $path = $request->file('image')->storeAs('public/img/Profile/thumbnail/', $fileNametoStore);
+            // Delete Old Image
+            $image_path = storage_path('app\public\img\Profile\\'.$user->image);
+            
+             //dd($image_path);
+            if (File::exists($image_path)) {
+                unlink($image_path);
+            }
+
+            $image_paththumbnail = storage_path('app\public\img\Profile\thumbnail\\'.$user->image);
+            //dd($image_path);
+           if (File::exists($image_paththumbnail)) {
+               unlink($image_paththumbnail);
+           }
+        }
+
+                $user->name = $request->name;
+                $user->email = $request->email;
+                if ($request->hasFile('image'))
+                {
+                    $user->image = $fileNametoStore;
+                }
+                $user->password = Hash::make($request['password']);
+
+                $user->save();
+                Alert::success('Success', 'User Update Successfuly !');
+                return redirect("/Profile/{$user->id}");
     }
 }

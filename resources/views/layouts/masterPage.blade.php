@@ -46,14 +46,14 @@
                   <!-- Menu Toggle Button -->
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <!-- The user image in the navbar-->
-                    <img src="{{ asset(Auth::user()->profile->avatar)}}" class="user-image" alt="User Image">
+                    <img src="{{ asset('storage\img\Profile\\'.Auth::user()->avatar)}}" class="user-image" alt="User Image">
                     <!-- hidden-xs hides the username on small devices so only the image appears. -->
                     <span class="hidden-xs">{{Auth::user()->name}}</span>
                   </a>
                   <ul class="dropdown-menu">
                     <!-- The user image in the menu -->
                     <li class="user-header">
-                      <img src="{{ asset(Auth::user()->profile->avatar)}}" class="img-circle" alt="User Image">
+                      <img src="{{ asset('storage\img\Profile\\'.Auth::user()->avatar)}}" class="img-circle" alt="User Image">
 
                       <p>
                             {{Auth::user()->name}}
@@ -68,9 +68,9 @@
 
                     <!-- Menu Footer-->
                     <li class="user-footer">
-                      <div class="pull-left">
-                        <a href="{{route('user.profile')}}" class="btn btn-default btn-flat"><i class="fa fa-user"></i> Profile</a>
-                      </div>
+                       <div class="pull-left">
+                        <a href="/admin/user/profile/{{Auth::user()->id}}" class="btn btn-default btn-flat"><i class="fa fa-user"></i> Profile</a>
+                      </div> 
                       <div class="pull-right">
                             <a class="btn btn-default btn-flat"  href="{{ route('logout') }}"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="fa fa-sign-out"></i> <span>Sign Out</span>
@@ -96,7 +96,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="{{ asset(Auth::user()->profile->avatar)}}" class="img-circle" alt="User Image">
+           <img src="{{ asset('storage\img\Profile\\'.Auth::user()->avatar)}}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>{{Auth::user()->name}}</p>

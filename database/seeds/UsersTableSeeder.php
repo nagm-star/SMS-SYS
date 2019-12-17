@@ -16,12 +16,9 @@ class UsersTableSeeder extends Seeder
             'name' => 'nagm yousif',
             'email' => 'info@sms.com',
             'password' => Hash::make('password'),
-            'admin' => 1
+            'admin' => 1,
+            'avatar' => '1.png',
         ]);
 
-        App\Profile::create([
-            'user_id' => $user->id,
-            'avatar' => 'uploads/avatars/1.png',
-        ]);
     }
 }

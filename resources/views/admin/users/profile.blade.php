@@ -40,7 +40,7 @@
 
        <div class="col-md-6 float-right">
             <div class="col-md-4">
-                <img src="{{ asset($user->profile->avatar)}}" class="img-bordered mt-3" style="border:1px solid #ccc" alt="" height="300px" width="300px">
+                <img src="{{ asset('storage\img\Profile\\'.$user->avatar)}}" class="img-bordered mt-3" style="border:1px solid #ccc" alt="" height="300px" width="300px">
             </div>
         </div>
 
