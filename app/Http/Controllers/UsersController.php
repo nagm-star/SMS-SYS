@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 use \App\User;
 use Illuminate\Support\Facades\Hash;
 use League\Flysystem\Exception;
+use Illuminate\Validation\Rule;
 use Session;
+use Validator;
+use File;
+
 
 class UsersController extends Controller
 {
@@ -176,15 +180,13 @@ class UsersController extends Controller
             $path = $request->file('image')->storeAs('/public/img/Profile/',$fileNametoStore);
             $path = $request->file('image')->storeAs('public/img/Profile/thumbnail/', $fileNametoStore);
             // Delete Old Image
-            $image_path = storage_path('app\public\img\Profile\\'.$user->image);
-            
-             //dd($image_path);
+            $image_path = storage_path('app\public\img\Profile\\'.$user->avatar);
+           
             if (File::exists($image_path)) {
                 unlink($image_path);
             }
-
-            $image_paththumbnail = storage_path('app\public\img\Profile\thumbnail\\'.$user->image);
-            //dd($image_path);
+            //Delete Old Thumbnail Img
+            $image_paththumbnail = storage_path('app\public\img\Profile\thumbnail\\'.$user->avatar);
            if (File::exists($image_paththumbnail)) {
                unlink($image_paththumbnail);
            }
@@ -194,12 +196,16 @@ class UsersController extends Controller
                 $user->email = $request->email;
                 if ($request->hasFile('image'))
                 {
-                    $user->image = $fileNametoStore;
+                    $user->avatar = $fileNametoStore;
                 }
                 $user->password = Hash::make($request['password']);
 
                 $user->save();
-                Alert::success('Success', 'User Update Successfuly !');
-                return redirect("/Profile/{$user->id}");
+
+                Session::flash('success', 'Your Profile Update successfully');
+
+                return redirect("/admin/user/profile/{$user->id}");
+
+               
     }
 }

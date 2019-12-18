@@ -5,37 +5,78 @@
 <div class="card card-default">
 
     <div class="card-header">
-      {{ isset($user) ? 'Edit user: '  .$user->name : 'Create User' }}
+        <h3>Update Your Profile</h3>
     </div>
     <div class="card-body">
       <div class="col-md-6 float-left">
-      <form action="{{ route('user.profile.update', $user->id) }}" method="post" enctype="multipart/form-data">
-          @csrf
+        {!! Form::open(['action'=> ['usersController@updateprofile',$user->id] ,'method'=>'POST','enctype'=>'multipart/form-data'])!!}
+                           
+        <div class="form-group row">
+            <div class="col-md-12">
+                {{Form::text('name', $user->name,
+                        [
+                            "class" => "form-control",
+                            "placeholder" => "Name",
+                            "max-lenght" => "255",
+                        ])
+                }}
+             <p class="red">{{$errors->first('name')}}</p>
+            </div>
+            
+        </div>
 
-          @method('PUT')
+        <div class="form-group row">
+            <div class="col-md-12">
+                {{Form::text('email', $user->email,
+                        [
+                            "class" => "form-control",
+                            "placeholder" => "Email",
+                            "max-lenght" => "255",
+                        ])
+                }}
+                 <p class="red">{{$errors->first('email')}}</p>
+            </div>
+           
+        </div>
+        
+        <div class="form-group row">
+            <div class="col-md-12">
+               {{Form::password("password", 
+               [
+                  "class" => "form-control",
+                  "placeholder" => "Your Password",
+               ])
+                }}
+               <p class="red">{{$errors->first('password')}}</p>
+            </div>
+        </div>
 
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input  type="text" id="name" name="name" class="form-control" value="{{isset($user) ? $user->name : ''}}">
+        <div class="form-group row">
+            <div class="col-md-12">
+                {{Form::password("password-confirm", 
+               [
+                  "class" => "form-control",
+                  "placeholder" => "Re-Password",
+               ])
+                }}
+                <p class="red">{{$errors->first('password-confirm')}}</p>
             </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input  type="email" id="email" name="email" class="form-control" value="{{isset($user) ? $user->email : ''}}">
+        </div>
+        <div class="form-group row">
+            <div class="col-md-12">
+                    {{form::file('image',[
+                        'class' => 'form-control'
+                    ])}}
+                    <p class="red">{{$errors->first('image')}}</p>
             </div>
-
-            <div class="form-group">
-                <label for="password">New Password</label>
-                <input type="password" id="password" name="password" class="form-control" >
+        </div>
+        <div class="form-group row mb-0">
+            <div class="col-md-6 offset-md-4">
+                {{form::hidden('_method','PUT')}}
+                {{Form::submit('Update Profile',["class"=>"btn btn-success"])}}
+                {!! Form::close() !!}
             </div>
-
-            <div class="form-group">
-                <label for="avatar">Upload new avatar</label>
-                <input type="file" id="avatar" name="avatar" class="form-control">
-            </div>
-           <div class="form-group">
-                <button class="btn btn-success">Update profile</button>
-            </div>
-        </form>
+        </div>
        </div>
 
        <div class="col-md-6 float-right">
