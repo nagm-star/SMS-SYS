@@ -51,17 +51,19 @@ class UsersController extends Controller
 
         $this->validate($request,[
             'name' => 'required|string|max:191',
+            'phone' => 'required|string|max:191',
             'email' => 'required|string|email|max:191|unique:users'
       ]);
 
      $user = User::create([
           'name' => $request->name,
           'email' => $request->email,
+          'phone' => $request->phone,
           'admin' => $request->role,
           'password' => Hash::make('password'),
       ]);
 
-     
+
       Session::flash('success', 'You successfully added user');
 
       return redirect(route('users.index'));
@@ -128,19 +130,35 @@ class UsersController extends Controller
 
     public function admin($id)
     {
+        $user = User::find($id);
 
+        $user->admin = 1;
+
+        $user->save();
+
+        Session::flash('success', 'Successfully changed user permission');
+
+        return redirect(route('users.index'));
     }
 
     public function not_admin($id)
     {
+        $user = User::find($id);
 
+        $user->admin = 0;
+
+        $user->save();
+
+        Session::flash('success', 'Successfully changed user permission');
+
+        return redirect(route('users.index'));
     }
 
     //added by Debo
 
     public function profile($id)
     {
-        
+
         $user  = User::findorFail($id);
         //dd($user);
         return view('admin.users.profile')->withUser($user);
@@ -156,16 +174,16 @@ class UsersController extends Controller
                     'required','string','email','max:255',
                     Rule::unique('users')->ignore($user->id),
                 ],
-                'password' => 'required|string|min:8',
-                'password-confirm' => 'required|string|min:8|same:password',
+                //'password' => 'required|string|min:8',
+                //'password-confirm' => 'required|string|min:8|same:password',
         ]);
 
         if ($validator->fails()) {
 
             return redirect()->back()->withErrors($validator)->withInput();
-         
+
          }
-         
+
         if ($request->hasFile('image'))
         {
             //get filename with extension
@@ -181,7 +199,7 @@ class UsersController extends Controller
             $path = $request->file('image')->storeAs('public/img/Profile/thumbnail/', $fileNametoStore);
             // Delete Old Image
             $image_path = storage_path('app\public\img\Profile\\'.$user->avatar);
-           
+
             if (File::exists($image_path)) {
                 unlink($image_path);
             }
@@ -198,7 +216,16 @@ class UsersController extends Controller
                 {
                     $user->avatar = $fileNametoStore;
                 }
+                if ($request->input('password'))
+                //if (hasRequest('password'))
+                {
+                    $this->validate($request,[
+                   'password' => 'required|string|min:8',
+                   'password-confirm' => 'required|string|min:8|same:password',
+                  ]);
                 $user->password = Hash::make($request['password']);
+
+                }
 
                 $user->save();
 
@@ -206,6 +233,6 @@ class UsersController extends Controller
 
                 return redirect("/admin/user/profile/{$user->id}");
 
-               
+
     }
 }

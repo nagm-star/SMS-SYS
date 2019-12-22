@@ -32,9 +32,10 @@
                         <th>Image</th>
                         <th>Name</th>
                         <th>Email</th>
+                        <th>Phone</th>
                         <th>Role</th>
                         <th>Permissions</th>
-                        <th>Delete</th>
+                        <th>Options</th>
                     </tr>
                 </thead>
 
@@ -52,8 +53,11 @@
                                     {{ $user->email }}
                                 </td>
                                 <td>
+                                    {{ $user->phone }}
+                                </td>
+                                <td>
                                         @if ($user->admin == 1 )
-                                        <p style="font-weight: normal">Administrator</p>
+                                        <p style="font-weight: normal">Admin</p>
                                         @else
                                         <p style="font-weight: normal">User</p>
                                         @endif</small>
@@ -68,7 +72,7 @@
                                             <a href="{{ route('users.admin', $user->id) }}" class="btn btn-sm btn-success">Make admin</a>
                                         @endif
                                         @else
-                                        Administrator
+                                        Admin
                                     @endif
                                 </td>
                                 <td>

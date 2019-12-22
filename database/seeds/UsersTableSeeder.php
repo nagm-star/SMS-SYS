@@ -17,6 +17,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'info@sms.com',
             'password' => Hash::make('password'),
             'admin' => 1,
+            'phone' => '0916216314',
             'avatar' => '1.png',
         ]);
 

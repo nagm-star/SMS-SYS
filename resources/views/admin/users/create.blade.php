@@ -13,12 +13,16 @@
           @csrf
 
             <div class="form-group col-md-6">
-                <label for="name">Name</label>
+                <label for="name">Full Name</label>
                 <input required type="text" id="name" name="name" class="form-control">
             </div>
             <div class="form-group col-md-6">
                 <label for="email">Email</label>
                 <input required type="email" id="email" name="email" class="form-control">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="phone">Phone</label>
+                <input required type="text" id="phone" name="phone" class="form-control">
             </div>
             <div class="form-group col-md-6">
                 <label for="role">Role </label><br>
