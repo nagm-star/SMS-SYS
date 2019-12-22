@@ -20,17 +20,14 @@ Route::get('/users/admin/{id}', 'UsersController@admin')->name('users.admin');
 
 Route::get('/user/profile', 'ProfileController@index')->name('user.profile');
 
-Route::get('/user/profile/{id}', 'usersController@profile')->name('user.profile.update');
+Route::get('/user/profile/{id}', 'UsersController@profile')->name('user.profile.update');
 
-Route::put('/user/profile/{id}', 'usersController@updateprofile')->name('updateprofile');
+Route::put('/user/profile/{id}', 'UsersController@updateprofile')->name('updateprofile');
 
-Route::delete('/user/delete/{id}', 'usersController@destroy');
+Route::delete('/user/delete/{id}', 'UsersController@destroy');
 
 Route::get('/users/not-admin/{id}', 'UsersController@not_admin')->name('users.not_admin');
 
-Route::get('/settings', 'SettingController@index');
-
-Route::put('/setting/update', 'SettingController@update')->name('setting.update');;
 
 
 Route::get('/home', [

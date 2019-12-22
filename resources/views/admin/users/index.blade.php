@@ -151,7 +151,8 @@
   function handleDelete(id) {
       //console.log('star.', id)
      var form = document.getElementById('deleteCategoryForm')
-     form.action = '/user/delete/' + id
+    // form.action = '/user/delete/' + id
+     form.action = '/admin/users/' + id
      $('#deleteModel').modal('show')
   }
 

@@ -16,7 +16,7 @@ class UsersController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('admin');
+        $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.
@@ -111,8 +111,29 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+
+    public function destroy(User $user)
     {
+        //dd($user);
+
+        if(!empty($user->image)) {
+            $image_path = storage_path('app\public\img\Profile\\'.$user->avatar);
+
+            if (file_exists($image_path)) {
+                unlink(public_path($image_path));
+            }
+        }
+
+        $user->delete();
+        Session::flash('success', 'successfully Deleted');
+
+        return redirect(route('users.index'));
+
+    }
+
+    public function destdroy(Request $user)
+    {
+        dd($user);
         $user = User::findorFail($id);
 
         //Delete Profile Image

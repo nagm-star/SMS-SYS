@@ -9,8 +9,8 @@
     </div>
     <div class="card-body">
       <div class="col-md-6 float-left">
-        {!! Form::open(['action'=> ['usersController@updateprofile',$user->id] ,'method'=>'POST','enctype'=>'multipart/form-data'])!!}
-                           
+        {!! Form::open(['action'=> ['UsersController@updateprofile',$user->id] ,'method'=>'POST','enctype'=>'multipart/form-data'])!!}
+
         <div class="form-group row">
             <div class="col-md-12">
                 {{Form::text('name', $user->name,
@@ -22,7 +22,7 @@
                 }}
              <p class="red">{{$errors->first('name')}}</p>
             </div>
-            
+
         </div>
 
         <div class="form-group row">
@@ -36,12 +36,12 @@
                 }}
                  <p class="red">{{$errors->first('email')}}</p>
             </div>
-           
+
         </div>
-        
+
         <div class="form-group row">
             <div class="col-md-12">
-               {{Form::password("password", 
+               {{Form::password("password",
                [
                   "class" => "form-control",
                   "placeholder" => "Your Password",
@@ -53,7 +53,7 @@
 
         <div class="form-group row">
             <div class="col-md-12">
-                {{Form::password("password-confirm", 
+                {{Form::password("password-confirm",
                [
                   "class" => "form-control",
                   "placeholder" => "Re-Password",
