@@ -86,7 +86,9 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        dd($id);
+        //dd($id);
+        $user = User::find($id);
+        return view('admin.users.edit')->with('user',$user);
     }
 
     /**
@@ -96,10 +98,17 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request,$id)
     {
-
-
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->save();
+        Session::flash('success', 'You successfully update user');
+  
+        return redirect(route('users.index'));
+        //dd($user);
     }
 
     /**
