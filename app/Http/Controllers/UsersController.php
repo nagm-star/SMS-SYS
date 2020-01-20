@@ -23,6 +23,9 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    // Created By Nagm
+
     public function index()
     {
 
@@ -155,6 +158,7 @@ class UsersController extends Controller
 
     }
 
+
     // Created By Nagm
 
 
@@ -170,6 +174,7 @@ class UsersController extends Controller
 
         return redirect(route('users.index'));
     }
+
 
     // Created By Nagm
 
