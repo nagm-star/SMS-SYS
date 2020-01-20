@@ -45,6 +45,9 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    // Created By Nagm
+
     public function store(Request $request)
     {
         //dd($request->all());
@@ -52,17 +55,11 @@ class UsersController extends Controller
         $this->validate($request,[
             'name' => 'required|string|max:191',
             'phone' => 'required|string|max:191',
-            'email' => 'required|string|email|max:191|unique:users'
+            'email' => 'required|string|email|max:191|unique:users',
+
       ]);
 
-     $user = User::create([
-          'name' => $request->name,
-          'email' => $request->email,
-          'phone' => $request->phone,
-          'admin' => $request->role,
-          'password' => Hash::make('password'),
-      ]);
-
+      $user = User::create($request->all());
 
       Session::flash('success', 'You successfully added user');
 
@@ -149,6 +146,9 @@ class UsersController extends Controller
 
     }
 
+    // Created By Nagm
+
+
     public function admin($id)
     {
         $user = User::find($id);
@@ -161,6 +161,9 @@ class UsersController extends Controller
 
         return redirect(route('users.index'));
     }
+
+    // Created By Nagm
+
 
     public function not_admin($id)
     {
@@ -175,6 +178,23 @@ class UsersController extends Controller
         return redirect(route('users.index'));
     }
 
+
+    // Created By Nagm
+
+    public function resetPassword($id)
+    {
+        //dd($id);
+
+        $user = User::find($id);
+
+        $user->password =  Hash::make('password');
+
+        $user->save();
+
+        Session::flash('success', 'Successfully reset password reset');
+
+        return redirect(route('users.index'));
+    }
     //added by Debo
 
     public function profile($id)

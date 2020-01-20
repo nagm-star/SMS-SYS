@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Hash;
+
 Route::get('/test', function () {
     return App\Profile::find(1)->user;
 });
@@ -7,6 +9,12 @@ Route::get('/test', function () {
 
 Auth::routes();
 
+Route::get('/test', function () {
+
+    $ss =Hash::make('password');
+
+    return $ss;
+});
 
 Route::get('/', function () {
     return redirect('admin/home');
@@ -27,6 +35,8 @@ Route::put('/user/profile/{id}', 'UsersController@updateprofile')->name('updatep
 Route::delete('/user/delete/{id}', 'UsersController@destroy');
 
 Route::get('/users/not-admin/{id}', 'UsersController@not_admin')->name('users.not_admin');
+
+Route::put('/users/reset-password/{id}', 'UsersController@resetPassword')->name('users.reset');
 
 
 

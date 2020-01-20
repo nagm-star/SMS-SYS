@@ -20,7 +20,6 @@
             <h3 class="box-title"></h3>
             <span class="float-right">
         <a href="{{ route('users.create') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add user</a>
-
             </span>
         </div>
         <div class="box-body">
@@ -81,6 +80,8 @@
                                         <a href="{{ route('users.edit', $user->id)}}" class="btn btn-info btn-sm">
                                                 <span class="fa fa-pencil"></span> Edit
                                         </a>
+
+                                        <button class="btn btn-primary btn-sm" onclick="handleReset({{ $user->id }})"><span class="fa fa-refresh"></span> Reset Password </button>
                                         <button class="btn btn-danger btn-sm" onclick="handleDelete({{ $user->id }})"><span class="fa fa-trash"></span> Delete </button>
 
                                 @else
@@ -112,7 +113,7 @@
 
 
 <!-- Delete Modal -->
-<div class="modal fade modal-danger" id="deleteModel" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+<div class="modal fade modal" id="deleteModel" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -140,6 +141,36 @@
   </div>
 </div>
 
+
+<!-- Delete Modal -->
+<div class="modal fade" id="resetModel" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-center" id="exampleModalLabel">Reset Confirmation</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="" method="POST" id="resetCategoryForm">
+          @csrf
+          @method('PUT')
+          <div class="modal-body">
+            <h5 class="text-center">
+              Are you sure you want to reset password?
+            </h5>
+            <input type="hidden" name="prod_id" id="product_id" value="">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal">No, Cancel</button>
+            <button type="submit" class="btn btn-info">Yes, Reset</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
 @endsection
 
 
@@ -154,6 +185,14 @@
     // form.action = '/user/delete/' + id
      form.action = '/admin/users/' + id
      $('#deleteModel').modal('show')
+  }
+
+  function handleReset(id) {
+      //console.log('star.', id)
+     var form = document.getElementById('resetCategoryForm')
+    // form.action = '/user/delete/' + id
+     form.action = '/admin/users/reset-password/' + id
+     $('#resetModel').modal('show')
   }
 
 </script>
