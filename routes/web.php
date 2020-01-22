@@ -26,7 +26,7 @@ Route::resource('users', 'UsersController');
 
 Route::get('/users/admin/{id}', 'UsersController@admin')->name('users.admin');
 
-Route::get('/user/profile', 'ProfileController@index')->name('user.profile');
+//Route::get('/user/profile', 'ProfileController@index')->name('user.profile');
 
 Route::get('/user/profile/{id}', 'UsersController@profile')->name('user.profile.update');
 
@@ -48,3 +48,4 @@ Route::get('/home', [
 
 });
 
+Route::resource('/admin/groups','GroupsController');

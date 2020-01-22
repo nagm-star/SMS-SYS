@@ -141,6 +141,17 @@
                 <li><a href=""><i class="fa fa-paper-plane"></i> <span>Bulk Management</span></a></li>
             </ul>
         </li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-sitemap"></i> <span>Group Management</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+              <li><a href="{{url('../admin/groups')}}"><i class="fa fa-sitemap"></i> <span>Groups</span></a></li>
+              <li><a href=""><i class="fa fa-address-book-o"></i> <span>Members</span></a></li>
+          </ul>
+      </li>
         @if(Auth::user()->admin)
         <li class="treeview">
                 <a href="#"><i class="fa fa-group orange"></i> <span>Admin Console</span>
