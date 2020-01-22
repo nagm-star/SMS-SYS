@@ -10,8 +10,7 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="stylesheet" href="{{asset('css/app.css')}}">
-{{--   <link rel="stylesheet" href="cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
- --}}  <link rel="stylesheet" href="{{asset('css/toastr.min.css')}}">
+  <link rel="stylesheet" href="{{asset('css/toastr.min.css')}}">
   <link rel="stylesheet" href="{{asset('Ionicons/css/ionicons.min.css')}}">
 
   @yield('styles')
@@ -70,7 +69,7 @@
                     <li class="user-footer">
                        <div class="pull-left">
                         <a href="/admin/user/profile/{{Auth::user()->id}}" class="btn btn-default btn-flat"><i class="fa fa-user"></i> Profile</a>
-                      </div> 
+                      </div>
                       <div class="pull-right">
                             <a class="btn btn-default btn-flat"  href="{{ route('logout') }}"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="fa fa-sign-out"></i> <span>Sign Out</span>
