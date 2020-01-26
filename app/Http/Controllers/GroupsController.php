@@ -118,6 +118,7 @@ class GroupsController extends Controller
 
         //then Delete Group
         $group->delete();
+        //$group->members()->delete();
         Session::flash('success', 'You successfully Deleted group');
         return redirect(route('groups.index'));
     }

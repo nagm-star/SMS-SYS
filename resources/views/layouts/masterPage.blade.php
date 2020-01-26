@@ -111,7 +111,7 @@
       </div>
 
       <!-- search form (Optional) -->
-      <form action="#" method="get" class="sidebar-form">
+{{--       <form action="#" method="get" class="sidebar-form">
         <div class="input-group">
           <input type="text" name="q" class="form-control" placeholder="Search...">
           <span class="input-group-btn">
@@ -119,7 +119,7 @@
               </button>
             </span>
         </div>
-      </form>
+      </form> --}}
       <!-- /.search form -->
 
       <!-- Sidebar Menu -->
@@ -147,8 +147,8 @@
               </span>
           </a>
           <ul class="treeview-menu">
-              <li><a href="{{url('../admin/groups')}}"><i class="fa fa-sitemap"></i> <span>Groups</span></a></li>
-              <li><a href=""><i class="fa fa-address-book-o"></i> <span>Members</span></a></li>
+              <li><a href="{{ route('groups.index') }}"><i class="fa fa-sitemap"></i> <span>Groups</span></a></li>
+              <li><a href="{{route('members.index')}}"><i class="fa fa-address-book-o"></i> <span>Members</span></a></li>
           </ul>
       </li>
         @if(Auth::user()->admin)

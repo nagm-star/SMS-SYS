@@ -19,7 +19,12 @@
         <div class="box-header">
             <h3 class="box-title"></h3>
             <span class="float-right">
-        <a href="{{ route('groups.create') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add Group</a>
+        <a href="{{ route('members.create') }}" class="btn btn-info white"><i class="fa fa-plus"></i> Upload Excel file</a>
+        <a href="{{ route('addMember') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add member</a>
+            </span>
+            <span class="float-left">
+        <a href="{{ route('export') }}" class="btn btn-success"><i class="fa fa-download"></i> Export to Excel</a>
+              
             </span>
         </div>
         <div class="box-body">
@@ -29,31 +34,31 @@
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Description</th>
-                        <th>Members</th>
+                        <th>Phone</th>
+                        <th>Group name</th>
                         <th>Options</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                        @if ($groups->count() > 0)
-                        @foreach ($groups as $group)
+                        @if ($members->count() > 0)
+                        @foreach ($members as $member)
                             <tr>
                                 <td>
-                                    {{ $group->group_name }}
+                                    {{ $member->name }}
                                 </td>
                                 <td>
-                                    {{ $group->group_desc }}
+                                    {{ $member->phone }}
+                                </td>                                
+                                <td>
+                                    {{ $member->group->group_name }}
                                 </td>
                                 <td>
-                                    {{ $group->members->count() }}
-                                </td>
-                                <td>
-                                <a href="{{ route('groups.edit', $group->id)}}" class="btn btn-info btn-sm">
+                                <a href="{{ route('members.edit', $member->id)}}" class="btn btn-info btn-sm">
                                         <span class="fa fa-pencil"></span> Edit
                                 </a>
 
-                                <button class="btn btn-danger btn-sm" onclick="handleDelete({{ $group->id }})"><span class="fa fa-trash"></span> Delete </button>
+                                <button class="btn btn-danger btn-sm" onclick="handleDelete({{ $member->id }})"><span class="fa fa-trash"></span> Delete </button>
                                 </td>
 
                             </tr>
@@ -62,14 +67,14 @@
 
                         @else
                         <tr >
-                            <th colspan="6" class="text-center">No users</th>
+                            <th colspan="6" class="text-center">No members</th>
                         </tr>
                     @endif
             </tbody>
         </table>
 
         <div class="row">
-                <div class="col-md-8"> {{--  {{$users->links()}} --}} </div>
+                <div class="col-md-8">  {{$members->links()}}  </div>
             </div>
         </div>
     </div>
@@ -99,7 +104,7 @@
             <button type="submit" class="btn btn-danger">Yes, Delete</button>
           </div>
         </form>
-  
+
       </div>
     </div>
   </div>
@@ -113,7 +118,7 @@
       //console.log('star.', id)
      var form = document.getElementById('deleteCategoryForm')
     // form.action = '/user/delete/' + id
-     form.action = '/admin/groups/' + id
+     form.action = '/admin/members/' + id
      $('#deleteModel').modal('show')
   }
 </script>

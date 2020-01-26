@@ -2,11 +2,6 @@
 
 use Illuminate\Support\Facades\Hash;
 
-Route::get('/test', function () {
-    return App\Profile::find(1)->user;
-});
-
-
 Auth::routes();
 
 Route::get('/test', function () {
@@ -45,7 +40,16 @@ Route::get('/home', [
     'as' =>'home'
 ]);
 
+Route::resource('groups','GroupsController');
+
+Route::resource('members','MembersController');
+
+Route::get('/export', 'MembersController@export')->name('export');
+
+Route::get('/addmember', 'MembersController@add')->name('addMember');
+
+//Route::post('/addmember', 'MembersController@store')->name('singleMember');
+
+Route::post('/import', 'MembersController@import')->name('import');
 
 });
-
-Route::resource('/admin/groups','GroupsController');
