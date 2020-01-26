@@ -1,10 +1,9 @@
 <?php
-
-/*
-    MembersController
-    Created By : Nagm Eldin Yousif
-    Date: 23-1-2020
-*/
+/**********************
+    File Name   : MembersController.php
+    Author Name : Nagm Eldin Yousif
+    Created On  : 23-1-2020
+***********************/
 
 namespace App\Http\Controllers;
 

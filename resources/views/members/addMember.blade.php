@@ -1,3 +1,10 @@
+<?php
+/**********************
+    File Name   : addMember.blade.php
+    Author Name : Nagm Eldin Yousif
+    Created On  : 23-1-2020
+***********************/
+?>
 @extends('layouts.masterPage')
 
 @section('content')

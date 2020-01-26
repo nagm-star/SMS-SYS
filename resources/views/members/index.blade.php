@@ -1,3 +1,10 @@
+<?php
+/**********************
+    File Name   : index.blade.php
+    Author Name : Nagm Eldin Yousif
+    Created On  : 23-1-2020
+***********************/
+?>
 @extends('layouts.masterPage')
 
 
@@ -24,7 +31,7 @@
             </span>
             <span class="float-left">
         <a href="{{ route('export') }}" class="btn btn-success"><i class="fa fa-download"></i> Export to Excel</a>
-              
+
             </span>
         </div>
         <div class="box-body">
@@ -49,7 +56,7 @@
                                 </td>
                                 <td>
                                     {{ $member->phone }}
-                                </td>                                
+                                </td>
                                 <td>
                                     {{ $member->group->group_name }}
                                 </td>
