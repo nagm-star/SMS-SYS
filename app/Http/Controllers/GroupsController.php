@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Group;
+use \App\User;
 
 use Session;
 
 use Validator;
-
 class GroupsController extends Controller
 {
     public function __construct()
@@ -23,9 +23,17 @@ class GroupsController extends Controller
      */
     public function index()
     {
-        
-        $groups = Group::all();
-        return view('groups.index')->with('groups',$groups);
+        $user_id = auth()->user()->id;
+        $admins = Group::all();
+        if(auth()->user()->admin)
+        {
+            $groups = Group::all();
+            return view('groups.index')->with('groups',$groups);
+        }else{
+            $groups = Group::all()->where('user_id',$user_id);
+            return view('groups.index')->with('groups',$groups);
+        }
+
     }
 
     /**
