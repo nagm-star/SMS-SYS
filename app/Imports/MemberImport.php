@@ -28,8 +28,8 @@ class MemberImport implements ToModel
     {
         return [
             '0' => 'required|string',
-            '1' => 'string',
-            '2' => 'required:numeric',
+            '1' => 'required|string',
+            '2' => 'required:numeric|max:9',
         ];
     }
 }

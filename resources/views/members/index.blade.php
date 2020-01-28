@@ -43,6 +43,7 @@
                         <th>Name</th>
                         <th>Phone</th>
                         <th>Group name</th>
+                        <th>Added By</th>
                         <th>Options</th>
                     </tr>
                 </thead>
@@ -59,6 +60,9 @@
                                 </td>
                                 <td>
                                     {{ $member->group->group_name }}
+                                </td>
+                                <td>
+                                    {{ $member->user->name }}
                                 </td>
                                 <td>
                                 <a href="{{ route('members.edit', $member->id)}}" class="btn btn-info btn-sm">
@@ -81,7 +85,7 @@
         </table>
 
         <div class="row">
-                <div class="col-md-8">  {{$members->links()}}  </div>
+                <div class="col-md-8">   </div>
             </div>
         </div>
     </div>

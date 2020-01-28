@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 use App\Exports\MemberExport;
 use App\Imports\MemberImport;
 use App\Group;
+use App\User;
 use App\Member;
 use Maatwebsite\Excel\facades\Excel;
 use Illuminate\Http\Request;
@@ -26,8 +27,19 @@ class MembersController extends Controller
      */
     public function index()
     {
-        $members = Member::orderBy('created_at','desc')->paginate(10);
-        return view('members.index',compact('members') );
+        $user_id = auth()->user()->id;
+        $members = Member::all();
+        if(auth()->user()->admin)
+        {
+            $members = Member::all();
+            return view('members.index')->with('members',$members);
+        }else{
+            $members = Member::all()->where('user_id',$user_id);
+            return view('members.index')->with('members',$members);
+        }
+
+        //$members = Member::orderBy('created_at','desc')->paginate(10);
+       // return view('members.index',compact('members') );
     }
 
     /**
@@ -84,6 +96,7 @@ class MembersController extends Controller
             $member->name = $request->name;
             $member->phone = $request->phone;
             $member->group_id = $request->input('group_id');
+            $member->user_id = auth()->user()->id;
             $member->save();
 
             Session::flash('success', 'You successfully added user');
@@ -202,10 +215,13 @@ class MembersController extends Controller
         return redirect(route('members.index'));
     }
 
+
     public function export()
     {
         return Excel::download(new MemberExport(), 'members.xlsx');
     }
+
+
     public function import(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -221,7 +237,11 @@ class MembersController extends Controller
                     Member::where('id', $member[0])->create([
                         'name' => $member[1],
                         'phone' => $member[2],
-                        'group_id' => $request->input('group_id')
+                        'group_id' => $request->input('group_id'),
+                        //'user_id' =>  $request->input('user_id')
+                        'user_id' =>   $request->input('user_id')
+
+
                     ]);
                 }
                 return redirect(route('members.index')); //ErrorException (E_NOTICE)
@@ -231,7 +251,7 @@ class MembersController extends Controller
             }
 
             catch(\Illuminate\Database\QueryException $e) {
-                //dd($e->getMessage();
+                dd($e->getMessage());
                 return redirect()->back()
                 ->with(['error' => 'Coulmn in excel file not matched in database' ]);
             }

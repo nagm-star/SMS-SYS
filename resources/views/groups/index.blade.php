@@ -31,6 +31,7 @@
                         <th>Name</th>
                         <th>Description</th>
                         <th>Members</th>
+                        <th>Created By</th>
                         <th>Options</th>
                     </tr>
                 </thead>
@@ -47,6 +48,9 @@
                                 </td>
                                 <td>
                                     {{ $group->members->count() }}
+                                </td>
+                                <td>
+                                    {{ $group->user->name }}
                                 </td>
                                 <td>
                                 <a href="{{ route('groups.edit', $group->id)}}" class="btn btn-info btn-sm">

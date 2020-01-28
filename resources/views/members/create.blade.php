@@ -23,6 +23,9 @@
                 <label for="import_file">Upload Excel File</label>
                 <input  type="file" id="import_file" name="import_file" class="form-control">
             </div>
+            <div class="form-group col-md-6">
+                <input  type="text" id="user_id" name="user_id" value="{{Auth::user()->id}}" hidden="" class="form-control">
+            </div>
 
             <div class="form-group col-md-6">
                 <label for="group_id">Assign Group</label>
