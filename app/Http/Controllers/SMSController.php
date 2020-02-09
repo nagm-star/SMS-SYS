@@ -94,22 +94,26 @@ class SMSController extends Controller
         }
         elseif($request->sendto == "group"){
             $members = Member::all()->where('group_id',$request->group_id);
-            foreach ($members as $member){
-                $sms = new SMS();
-                $sms->sms_text = $request->sms_text;
-                $sms->sms_length = $request->sms_page;
-                $sms->phone_number = $member->phone;
-                $sms->group_id = $request->group_id;
-                $sms->user_id = auth()->user()->id;
-                $sms->status = 1;
-                $sms->save();
-            }
-        }
-        Session::flash('success', 'You successfully send sms');
+            if($members->count() > 0) {
+                foreach ($members as $member){
+                    $sms = new SMS();
+                    $sms->sms_text = $request->sms_text;
+                    $sms->sms_length = $request->sms_page;
+                    $sms->phone_number = $member->phone;
+                    $sms->group_id = $request->group_id;
+                    $sms->user_id = auth()->user()->id;
+                    $sms->status = 1;
+                    $sms->save(); }
+                    Session::flash('success', 'You successfully send sms');
+                } else {
+                  Session::flash('error', 'You must add members to group');
+                }
 
-        return redirect(route('sms.index'));
-       
-    }
+            }
+                return redirect(route('sms.index'));
+                
+        }
+
 
     /**
      * Display the specified resource.
@@ -119,7 +123,8 @@ class SMSController extends Controller
      */
     public function show($id)
     {
-        //
+        $sms = SMS::find($id);
+        return view('sms.view')->with('sms',$sms);
     }
 
     /**

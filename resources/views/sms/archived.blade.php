@@ -16,12 +16,12 @@
 
 <div class="">
     <div class="box">
-        <div class="box-header">
+<!--         <div class="box-header">
             <h3 class="box-title"></h3>
             <span class="float-right">
         <a href="{{ route('sms.create') }}" class="btn btn-success"><i class="fa fa-plus"></i> New SMS</a>
             </span>
-        </div>
+        </div> -->
         <div class="box-body">
 
 

@@ -67,6 +67,9 @@
                                 <td>
                                 
                                 <button class="btn btn-danger btn-sm" onclick="handleArchive({{ $sms->id }})"><span class="fa fa-recycle"></span> Archive </button>
+                                <a href="{{ route('sms.show', $sms->id)}}" class="btn btn-info btn-sm">
+                                        <span class="fa fa-eye"></span> View
+                                </a>
                                 </td>
 
                             </tr>
@@ -75,7 +78,7 @@
 
                         @else
                         <tr >
-                            <th colspan="6" class="text-center">No SMS</th>
+                            <th colspan="7" class="text-center">No SMS</th>
                         </tr>
                     @endif
             </tbody>
