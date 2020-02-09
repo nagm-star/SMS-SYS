@@ -19,7 +19,7 @@
         <div class="box-header">
             <h3 class="box-title"></h3>
             <span class="float-right">
-        <a href="{{ route('groups.create') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add Group</a>
+        <a href="{{ route('sms.create') }}" class="btn btn-success"><i class="fa fa-plus"></i> New SMS</a>
             </span>
         </div>
         <div class="box-body">
@@ -29,39 +29,43 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Members</th>
+                        <th>SMS Text</th>
+                        <th>Phone</th>
+                        <th>Pages</th>
+                        <th>Group</th>
                         <th>Created By</th>
                         <th>Options</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                        @if ($groups->count() > 0)
-                        @foreach ($groups as $index => $group)
+                        @if ($smss->count() > 0)
+                        @foreach ($smss as $index =>$sms)
                             <tr>
                                 <td>
-                                  {{ $index +1 }}
+                                    {{ $index +1 }}
                                 </td>
                                 <td>
-                                    {{ $group->group_name }}
+                                    {{ $sms->sms_text }}
                                 </td>
                                 <td>
-                                    {{ $group->group_desc }}
+                                    {{ $sms->phone_number }}
                                 </td>
                                 <td>
-                                    {{ $group->members->count() }}
+                                    {{ $sms->sms_length }}
                                 </td>
                                 <td>
-                                    {{ $group->user->name }}
+                                    @if($sms->group_id==0)
+                                        {{"Individual"}}
+                                        @else
+                                        {{ $sms->group->group_name }}
+                                    @endif
                                 </td>
                                 <td>
-                                <a href="{{ route('groups.edit', $group->id)}}" class="btn btn-info btn-sm">
-                                        <span class="fa fa-pencil"></span> Edit
-                                </a>
-
-                                <button class="btn btn-danger btn-sm" onclick="handleDelete({{ $group->id }})"><span class="fa fa-trash"></span> Delete </button>
+                                    {{ $sms->user->name }}
+                                </td>
+                                <td>
+                                    <button class="btn btn-success btn-sm" onclick="handleRestore({{ $sms->id }})"><span class="fa fa-recycle"></span> Restore </button>
                                 </td>
 
                             </tr>
@@ -70,7 +74,7 @@
 
                         @else
                         <tr >
-                            <th colspan="6" class="text-center">No users</th>
+                            <th colspan="6" class="text-center">No SMS</th>
                         </tr>
                     @endif
             </tbody>
@@ -89,22 +93,21 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title text-center" id="exampleModalLabel">Delete Confirmation</h5>
+          <h5 class="modal-title text-center" id="exampleModalLabel">Restore Confirmation</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form action="" method="POST" id="deleteCategoryForm">
+        <form action="" method="GET" id="deleteCategoryForm">
           @csrf
-          @method('DELETE')
           <div class="modal-body">
             <p class="text-center">
-              Are you sure you want to delete this?
+              Are you sure you want to restore this sms?
             </p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-success" data-dismiss="modal">No, Cancel</button>
-            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+            <button type="button" class="btn btn-info" data-dismiss="modal">No, Cancel</button>
+            <button type="submit" class="btn btn-warning">Yes, Restore</button>
           </div>
         </form>
   
@@ -117,11 +120,12 @@
 
 <script>
 
-  function handleDelete(id) {
+function handleRestore(id) {
       //console.log('star.', id)
      var form = document.getElementById('deleteCategoryForm')
     // form.action = '/user/delete/' + id
-     form.action = '/admin/groups/' + id
+     var url = '{{ route("sms.restore", ":id")}}';
+     form.action = url.replace(':id',id);
      $('#deleteModel').modal('show')
   }
 </script>

@@ -42,6 +42,14 @@ Route::get('/home', [
 
 Route::resource('groups','GroupsController');
 
+Route::resource('sms','SMSController');
+
+Route::get('/archived', 'SMSController@archived')->name('archived');
+
+Route::get('sms/archive/{id}', 'SMSController@archive')->name('sms.archive');
+
+Route::get('sms/restore/{id}', 'SMSController@restore')->name('sms.restore');
+
 Route::resource('members','MembersController');
 
 Route::get('/export', 'MembersController@export')->name('export');

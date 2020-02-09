@@ -131,15 +131,26 @@
 
       {{--  @endcan --}}
         <li class="treeview">
-            <a href="#"><i class="fa fa-cogs red"></i> <span>SMS Management</span>
+            <a href="#"><i class="fa fa-envelope-o"></i> <span>SMS Management</span>
               <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href=""><i class="fa fa-paper-plane"></i> <span>Bulk Management</span></a></li>
-            </ul>
+              <li><a href="{{ route('sms.index') }}"><i class="fa fa-paper-plane"></i> <span>Outbox</span></a></li>
+              <li><a href="{{ route('archived') }}"><i class="fa fa-recycle"></i> <span>Archived</span></a></li>
+          </ul>
         </li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-cogs red"></i> <span>Bulk Management</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+              <li><a href=""><i class="fa fa-paper-plane"></i> <span>Bulk Management</span></a></li>
+          </ul>
+      </li>
         <li class="treeview">
           <a href="#"><i class="fa fa-sitemap"></i> <span>Group Management</span>
             <span class="pull-right-container">

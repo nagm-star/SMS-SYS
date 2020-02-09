@@ -28,6 +28,7 @@
             <table class="table table-hover table-bordered">
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>Image</th>
                         <th>Name</th>
                         <th>Email</th>
@@ -40,8 +41,11 @@
 
                 <tbody>
                         @if ($users->count() > 0)
-                        @foreach ($users as $user)
+                        @foreach ($users as $index => $user)
                             <tr>
+                                <td>
+                                  {{ $index +1 }}
+                                </td>
                                 <td>
                                     <img src="{{ asset('storage\img\Profile\\'.$user->avatar)}}" alt="" height="50px" width="50px"  srcset="">
                                 </td>
@@ -81,7 +85,7 @@
                                                 <span class="fa fa-pencil"></span> Edit
                                         </a>
 
-                                        <button class="btn btn-primary btn-sm" onclick="handleReset({{ $user->id }})"><span class="fa fa-refresh"></span> Reset Password </button>
+                                        <button class="btn btn-primary btn-sm" onclick="handleReset({{ $user->id }})"><span class="fa fa-refresh"></span> Reset </button>
                                         <button class="btn btn-danger btn-sm" onclick="handleDelete({{ $user->id }})"><span class="fa fa-trash"></span> Delete </button>
 
                                 @else

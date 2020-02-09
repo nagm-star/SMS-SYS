@@ -27,7 +27,9 @@ class Group extends Model
     {
         return $this->hasMany(Member::class);
     }
-
+    public function sms(){
+        return $this->hasMany('App\SMS');
+    }
     // Created By Nagm yousif
     // to delete all related members
 

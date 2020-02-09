@@ -44,4 +44,7 @@ class User extends Authenticatable
     public function groups(){
         return $this->hasMany('App\Group');
     }
+    public function sms(){
+        return $this->hasMany('App\SMS');
+    }
 }
